@@ -14,23 +14,23 @@ https://sunstar.run.goorm.io
 
 
 ##  getBalance 
-client.getBalance(addr, function (err, balance) {
+    client.getBalance(addr, function (err, balance) {
 	    if (!err) {
 			var total = CoinStack.Math.toBitcoin(balance);
 			$('#i_balance').val(total);
 			console.log("address: ", addr);
 			console.log('total: ',total);
 		}
-});
+     });
 
 ## send transaction
 
-let txBuilder = client.createTransactionBuilder();
-txBuilder.addOutput(toaccount, CoinStack.Math.toSatoshi(coin));
-txBuilder.setInput(fromaccount);
-txBuilder.buildTransaction(function (err, tx) {
-try {
-
+     let txBuilder = client.createTransactionBuilder();
+     txBuilder.addOutput(toaccount, CoinStack.Math.toSatoshi(coin));
+     txBuilder.setInput(fromaccount);
+     txBuilder.buildTransaction(function (err, tx) {
+     try {
+       
       tx.sign(privateKey);
        
        let rawTx = tx.serialize();
@@ -40,13 +40,11 @@ try {
 	     alert("거래가 완료 되었습니다..!!!");
 	 }
        });
-       
-  } catch (e) {
-  
-     console.log(e)
+    } catch (e) {
+       console.log(e)
      
-  } //end of try
+      } //end of try
   
-}) // end of txbuilder
+    }) // end of txbuilder
 
     
