@@ -12,6 +12,8 @@ https://www.blocko.io/console.html
 https://sunstar.run.goorm.io
 
 
+<h5>송신처  <input id="i_address" size="45" placeholder=""></input> </h5>
+
 
 ##  getBalance 
     client.getBalance(addr, function (err, balance) {
