@@ -28,20 +28,25 @@ client.getBalance(addr, function (err, balance) {
 let txBuilder = client.createTransactionBuilder();
 txBuilder.addOutput(toaccount, CoinStack.Math.toSatoshi(coin));
 txBuilder.setInput(fromaccount);
-
 txBuilder.buildTransaction(function (err, tx) {
-  try {
-       tx.sign(privateKey);
+try {
+
+      tx.sign(privateKey);
+       
        let rawTx = tx.serialize();
        client.sendTransaction(rawTx, function (err) {
-					if (!err) {
-						console.log("definition: ", tx.getHash());
-						alert("거래가 완료 되었습니다..!!!");
-					}
+	 if (!err) {
+	     console.log("definition: ", tx.getHash());
+	     alert("거래가 완료 되었습니다..!!!");
+	 }
        });
-
+       
   } catch (e) {
+  
      console.log(e)
+     
   } //end of try
+  
 }) // end of txbuilder
+
     
