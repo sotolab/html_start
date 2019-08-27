@@ -31,10 +31,8 @@ txBuilder.setInput(fromaccount);
 
 txBuilder.buildTransaction(function (err, tx) {
   try {
-		   tx.sign(privateKey);
-       
+       tx.sign(privateKey);
        let rawTx = tx.serialize();
-       
        client.sendTransaction(rawTx, function (err) {
 					if (!err) {
 						console.log("definition: ", tx.getHash());
