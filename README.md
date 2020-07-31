@@ -1,49 +1,45 @@
 
-# Start Coinstack
-Start Coinstack 
+# Start 
 
-Author : Soto Jang (soto1935@gmail.com)
-
-
-https://blocko-1.gitbook.io/coinstack-api-reference/
-
-https://www.blocko.io/console.html
+https://github.com/dappuniversity/web3_examples
 
 https://sunstar.run.goorm.io
 
 
 ##  getBalance 
-    client.getBalance(addr, function (err, balance) {
-	    if (!err) {
-			var total = CoinStack.Math.toBitcoin(balance);
-			$('#i_balance').val(total);
-			console.log("address: ", addr);
-			console.log('total: ',total);
-		}
-     });
+    let getbalance = await web3.eth.getBalance(fromaddress);
+		let balance = web3.utils.fromWei(getbalance, "ether")
+
+		if (DEBUG) console.log("balance : ", balance + " ETH");
+		$('#message').text(" balance: " + balance + " ETH");
 
 ## send transaction
 
-     let txBuilder = client.createTransactionBuilder();
-     txBuilder.addOutput(toaccount, CoinStack.Math.toSatoshi(coin));
-     txBuilder.setInput(fromaccount);
-     txBuilder.buildTransaction(function (err, tx) {
-     try {
-       
-      tx.sign(privateKey);
-       
-       let rawTx = tx.serialize();
-       client.sendTransaction(rawTx, function (err) {
-	 if (!err) {
-	     console.log("definition: ", tx.getHash());
-	     alert("거래가 완료 되었습니다..!!!");
-	 }
-       });
-    } catch (e) {
-       console.log(e)
-     
-      } //end of try
-  
-    }) // end of txbuilder
+    const privateKey = Buffer.from(myPrivateKey, 'hex');
+		if (DEBUG) console.log("privateKey: ", privateKey);
+
+		web3.eth.getTransactionCount(fromaddress, (err, txCount) => {
+		  // Build the transaction
+			const txObject = {
+				nonce: web3.utils.toHex(txCount),
+				to: toaddress,
+				value: web3.utils.toHex(web3.utils.toWei(amount, 'ether')),
+				gasLimit: web3.utils.toHex(21000),
+				gasPrice: web3.utils.toHex(web3.utils.toWei('10', 'gwei'))
+			}
+
+		// Sign the transaction
+			const tx = new ethereumjs.Tx(txObject);
+			tx.sign(privateKey);
+
+			const serializedTx = tx.serialize()
+			const raw = '0x' + serializedTx.toString('hex')
+
+			// Broadcast the transaction
+			web3.eth.sendSignedTransaction(raw, (err, txHash) => {
+				console.log('txHash:', txHash)
+				// Now go check etherscan to see the transaction!
+			})
+		})  // end of txbuilder
 
     
