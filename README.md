@@ -3,7 +3,7 @@
 
 https://github.com/dappuniversity/web3_examples
 
-http://sotoedu.herokuapp.com/login
+https://sotoedu.herokuapp.com/
 
 
 ##  getBalance 
